@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="KnjiznicaModelStoreContainer" CdmEntityContainer="KnjiznicaEntities">
+    <EntitySetMapping Name="books">
+      <EntityTypeMapping TypeName="KnjiznicaModel.book">
+        <MappingFragment StoreEntitySet="books">
+          <ScalarProperty Name="bookID" ColumnName="bookID" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="authors" ColumnName="authors" />
+          <ScalarProperty Name="average_rating" ColumnName="average_rating" />
+          <ScalarProperty Name="isbn" ColumnName="isbn" />
+          <ScalarProperty Name="isbn13" ColumnName="isbn13" />
+          <ScalarProperty Name="language_code" ColumnName="language_code" />
+          <ScalarProperty Name="C__num_pages" ColumnName="  num_pages" />
+          <ScalarProperty Name="ratings_count" ColumnName="ratings_count" />
+          <ScalarProperty Name="text_reviews_count" ColumnName="text_reviews_count" />
+          <ScalarProperty Name="publication_date" ColumnName="publication_date" />
+          <ScalarProperty Name="publisher" ColumnName="publisher" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Korisniks">
+      <EntityTypeMapping TypeName="KnjiznicaModel.Korisnik">
+        <MappingFragment StoreEntitySet="Korisnik">
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Posudenoes">
+      <EntityTypeMapping TypeName="KnjiznicaModel.Posudeno">
+        <MappingFragment StoreEntitySet="Posudeno">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="book_id" ColumnName="book_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="vracenoes">
+      <EntityTypeMapping TypeName="KnjiznicaModel.vraceno">
+        <MappingFragment StoreEntitySet="vraceno">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="book_id" ColumnName="book_id" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

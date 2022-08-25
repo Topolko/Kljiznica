@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="KnjiznicaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="book">
+    <Key>
+      <PropertyRef Name="bookID" />
+    </Key>
+    <Property Name="bookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="authors" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="average_rating" Type="Double" />
+    <Property Name="isbn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="isbn13" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="language_code" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+    <Property Name="C__num_pages" Type="Int16" />
+    <Property Name="ratings_count" Type="Int32" />
+    <Property Name="text_reviews_count" Type="Int32" />
+    <Property Name="publication_date" Type="DateTime" Precision="0" />
+    <Property Name="publisher" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Posudenoes" Relationship="Self.FK_Posudeno_books" FromRole="books" ToRole="Posudeno" />
+    <NavigationProperty Name="vracenoes" Relationship="Self.FK_vraceno_books" FromRole="books" ToRole="vraceno" />
+  </EntityType>
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="user_id" />
+    </Key>
+    <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Posudenoes" Relationship="Self.FK_Posudeno_Korisnik" FromRole="Korisnik" ToRole="Posudeno" />
+    <NavigationProperty Name="vracenoes" Relationship="Self.FK_vraceno_Korisnik" FromRole="Korisnik" ToRole="vraceno" />
+  </EntityType>
+  <EntityType Name="Posudeno">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="book_id" Type="Int32" />
+    <Property Name="user_id" Type="Int32" />
+    <NavigationProperty Name="book" Relationship="Self.FK_Posudeno_books" FromRole="Posudeno" ToRole="books" />
+    <NavigationProperty Name="Korisnik" Relationship="Self.FK_Posudeno_Korisnik" FromRole="Posudeno" ToRole="Korisnik" />
+  </EntityType>
+  <EntityType Name="vraceno">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="book_id" Type="Int32" />
+    <Property Name="user_id" Type="Int32" />
+    <NavigationProperty Name="book" Relationship="Self.FK_vraceno_books" FromRole="vraceno" ToRole="books" />
+    <NavigationProperty Name="Korisnik" Relationship="Self.FK_vraceno_Korisnik" FromRole="vraceno" ToRole="Korisnik" />
+  </EntityType>
+  <Association Name="FK_Posudeno_books">
+    <End Role="books" Type="Self.book" Multiplicity="0..1" />
+    <End Role="Posudeno" Type="Self.Posudeno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="books">
+        <PropertyRef Name="bookID" />
+      </Principal>
+      <Dependent Role="Posudeno">
+        <PropertyRef Name="book_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vraceno_books">
+    <End Role="books" Type="Self.book" Multiplicity="0..1" />
+    <End Role="vraceno" Type="Self.vraceno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="books">
+        <PropertyRef Name="bookID" />
+      </Principal>
+      <Dependent Role="vraceno">
+        <PropertyRef Name="book_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Posudeno_Korisnik">
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="0..1" />
+    <End Role="Posudeno" Type="Self.Posudeno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Korisnik">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="Posudeno">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_vraceno_Korisnik">
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="0..1" />
+    <End Role="vraceno" Type="Self.vraceno" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Korisnik">
+        <PropertyRef Name="user_id" />
+      </Principal>
+      <Dependent Role="vraceno">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="KnjiznicaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="books" EntityType="Self.book" />
+    <EntitySet Name="Korisniks" EntityType="Self.Korisnik" />
+    <EntitySet Name="Posudenoes" EntityType="Self.Posudeno" />
+    <EntitySet Name="vracenoes" EntityType="Self.vraceno" />
+    <AssociationSet Name="FK_Posudeno_books" Association="Self.FK_Posudeno_books">
+      <End Role="books" EntitySet="books" />
+      <End Role="Posudeno" EntitySet="Posudenoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vraceno_books" Association="Self.FK_vraceno_books">
+      <End Role="books" EntitySet="books" />
+      <End Role="vraceno" EntitySet="vracenoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Posudeno_Korisnik" Association="Self.FK_Posudeno_Korisnik">
+      <End Role="Korisnik" EntitySet="Korisniks" />
+      <End Role="Posudeno" EntitySet="Posudenoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_vraceno_Korisnik" Association="Self.FK_vraceno_Korisnik">
+      <End Role="Korisnik" EntitySet="Korisniks" />
+      <End Role="vraceno" EntitySet="vracenoes" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
